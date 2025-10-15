@@ -19,16 +19,8 @@ df_a['ts'] = pd.to_datetime(df_a['timestamp'])
 df_b['ts'] = pd.to_datetime(df_b['timestamp'])
 
 
-merged = pd.merge_asof(df_b.sort_values('ts'), df_a.sort_values('ts'), on='ts', direction='forward', suffixes=('_b','_a'))
 
 
-dataset = merged[['text_a','text_b']].dropna().rename(columns={'text_a':'A_reply','text_b':'B_message'})
-
-def build_example(prev_a_msgs, bmsg, reply, max_history_msgs=5):
-    
-    history = " ".join(prev_a_msgs[-max_history_msgs:])
-
-    return {"context": f"History(A): {history}\nB: {bmsg}\nA:", "target": reply}
 
 
 
